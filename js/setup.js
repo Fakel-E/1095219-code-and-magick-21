@@ -5,13 +5,13 @@ const COAT_COLOR = [`rgb(101, 137, 164)`, `rgb(241, 43, 107)`, `rgb(146, 100, 16
 const EYES_COLOR = [`black`, `red`, `blue`, `yellow`, `green`];
 const NUMBER_WIZARDS = 4;
 
-// функиция вызова рандомных чисел для цвета столбцов
-const getRandomInRange = function (min, max) {
+// функиция вызова рандомных чисел
+const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 // функция вызова рандомного элемента
-const getRandomElement = function (array) {
-  return array[[getRandomInRange(0, array.length - 1)]];
+const getRandomElement = (array) => {
+  return array[[getRandomNumber(0, array.length - 1)]];
 };
 
 // Открываем окно настройки персонажа
@@ -27,18 +27,21 @@ const similarWizardTemplate = document.querySelector(`#similar-wizard-template`)
 
 // создаём массив магов с уникальными характеристиками
 const wizards = [];
-
-for (let i = 0; i < NUMBER_WIZARDS; i++) {
-  wizards.push({
-    name: getRandomElement(WIZARD_NAMES),
-    surname: getRandomElement(WIZARD_SURNAME),
-    coatColor: getRandomElement(COAT_COLOR),
-    eyesColor: getRandomElement(EYES_COLOR)
-  });
-}
+const generateWizards = (wizard) => {
+  for (let i = 0; i < NUMBER_WIZARDS; i++) {
+    wizard.push({
+      name: getRandomElement(WIZARD_NAMES),
+      surname: getRandomElement(WIZARD_SURNAME),
+      coatColor: getRandomElement(COAT_COLOR),
+      eyesColor: getRandomElement(EYES_COLOR)
+    });
+  }
+  return wizard;
+};
+generateWizards(wizards);
 
 // функция отрисовки магов
-const renderWizard = function (wizard) {
+const renderWizard = (wizard) => {
   const wizardElement = similarWizardTemplate.cloneNode(true);
 
   wizardElement.querySelector(`.setup-similar-label`).textContent = wizard.name + ` ` + wizard.surname;
